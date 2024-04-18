@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{lt.codeacademy.blogApplication.user.form.title}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+<body>
+<nav class="navbar navbar-light "
+     style="background-color: #f0faf1; padding: 30px">
+    <div class="container-fluid">
+        <a th:href="@{/public/articles}">
+            <img th:src="${url}"
+                 style="height: 50px;"
+                 th:href="@{/public/articles}">
+        </a>
+        <div class="d-flex justify-content-end"
+             style="gap: 40px;">
+            <div>
+                <select id="language-switcher"
+                        class="form-select"
+                        aria-label="Default select example">
+                    <option value='' th:text="#{lt.codeacademy.blogApplication.language.switcher.select}"></option>
+                    <option value="EN" th:text="#{lt.codeacademy.blogApplication.language.switcher.en}"></option>
+                    <option value="LT" th:text="#{lt.codeacademy.blogApplication.language.switcher.lt}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container mx-auto w-50"
+     style="margin-top: 90px; margin-bottom: 100px;">
+    <h3 th:text="#{lt.codeacademy.blogApplication.user.form.title}"
+        style="font-family: 'Oswald', sans-serif; font-size: 25px; margin-bottom: 15px;"></h3>
+    <form method="post"
+          th:object="${user}"
+          th:action="@{/public/users/save}"
+          style="font-family: 'EB Garamond', serif;">
+        <div class="form-floating mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="floatingInputName"
+                   th:field="*{name}"
+                   th:placeholder="#{lt.codeacademy.blogApplication.user.form.name}"
+                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': (${user.name ne null} ? 'is-valid' : '')">
+            <label for="floatingInputName"
+                   th:text="#{lt.codeacademy.blogApplication.user.form.name}"></label>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('name')}"
+                 th:errors="*{name}">
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="floatingInputSurname"
+                   th:field="*{surname}"
+                   th:placeholder="#{lt.codeacademy.blogApplication.user.form.surname}"
+                   th:classappend="${#fields.hasErrors('surname')} ? 'is-invalid': (${user.surname ne null} ? 'is-valid' : '')">
+            <label for="floatingInputSurname"
+                   th:text="#{lt.codeacademy.blogApplication.user.form.surname}"></label>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('surname')}"
+                 th:errors="*{surname}">
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="floatingInputUsername"
+                   th:field="*{username}"
+                   th:placeholder="#{lt.codeacademy.blogApplication.user.form.username}"
+                   th:classappend="${#fields.hasErrors('username')} ? 'is-invalid': (${user.username ne null} ? 'is-valid' : '')">
+            <label for="floatingInputUsername"
+                   th:text="#{lt.codeacademy.blogApplication.user.form.username}"></label>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('username')}"
+                 th:errors="*{username}">
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="floatingInputEmail"
+                   th:field="*{email}"
+                   th:placeholder="#{lt.codeacademy.blogApplication.user.form.email}"
+                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid': (${user.email ne null} ? 'is-valid' : '')">
+            <label for="floatingInputEmail"
+                   th:text="#{lt.codeacademy.blogApplication.user.form.email}"></label>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('email')}"
+                 th:errors="*{email}">
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password"
+                   class="form-control"
+                   id="floatingInputPassword"
+                   th:field="*{password}"
+                   th:placeholder="#{lt.codeacademy.blogApplication.user.form.password}"
+                   th:classappend="${#fields.hasErrors('password') || #fields.hasErrors('global')} ? 'is-invalid': (${user.password ne null} ? 'is-valid' : '')">
+            <label for="floatingInputPassword"
+                   th:text="#{lt.codeacademy.blogApplication.user.form.password}"></label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.hasErrors('password')}"
+                     th:errors="*{password}">
+                </div>
+                <div th:if="${#fields.hasErrors('global')}"
+                     th:errors="*{global}">
+                </div>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password"
+                   class="form-control"
+                   id="floatingInputRepeatPassword"
+                   th:field="*{repeatPassword}"
+                   th:placeholder="#{lt.codeacademy.blogApplication.user.form.repeatPassword}"
+                   th:classappend="${#fields.hasErrors('repeatPassword') || #fields.hasErrors('global')} ? 'is-invalid': (${user.repeatPassword ne null} ? 'is-valid' : '')">
+            <label for="floatingInputRepeatPassword"
+                   th:text="#{lt.codeacademy.blogApplication.user.form.repeatPassword}"></label>
+            <div class="invalid-feedback">
+                <div th:if="${#fields.hasErrors('repeatPassword')}"
+                     th:errors="*{repeatPassword}">
+                </div>
+                <div th:if="${#fields.hasErrors('global')}"
+                     th:errors="*{global}">
+                </div>
+            </div>
+        </div>
+        <button type="submit"
+                class="btn btn-outline-success"
+                th:text="#{lt.codeacademy.blogApplication.user.form.button}"></button>
+    </form>
+    <div th:if="${message}" th:text="${message}"
+         style="font-family: 'Oswald', sans-serif; margin-top: 15px;"></div>
+</div>
+<nav class="navbar navbar-light">
+    <div class="container-fluid">
+        <img th:src="${fotter}"
+             style="width: -webkit-fill-available;">
+    </div>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/language-switcher.js}"></script>
+</body>
+</html>
