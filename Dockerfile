@@ -3,9 +3,12 @@ FROM eclipse-temurin:18-jdk-focal
 WORKDIR /app
 
 COPY .mvn/ .mvn
-COPY target/blogApplication-0.01-SNAPSHOT.jar blog-application.jar
+COPY mvnw pom.xml ./
+RUN chmod +x mvnw && \
+    chown root:root mvnw && \
+    bash -c './mvnw dependency:go-offline'
 
-EXPOSE 8080
+COPY src ./src
 
-CMD ["java", "-jar", "blog-application.jar"]
+CMD ["./mvnw", "spring-boot:run"]
 
