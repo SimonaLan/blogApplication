@@ -6,5 +6,5 @@ COPY .mvn/ .mvn
 COPY target/blogApplication-0.01-SNAPSHOT.jar blog-application.jar
 EXPOSE 8080
 
-CMD ["java", "-jar", "blogApplication-0.01-SNAPSHOT.jar"]
+CMD ["java", "-jar", "blog-Application.jar"]
 
