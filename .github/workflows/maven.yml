@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: Pull Image from Docker hub
         run: docker pull simonalan/blog-application
-      - name: Dlete old container
+      - name: Delete old container
         run: docker rm -f blog_application_container
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name blog_application_container simonalan/blog-application
