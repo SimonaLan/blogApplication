@@ -41,7 +41,7 @@ jobs:
     runs-on: [aws-ec2-blogApplication]
     steps:
       - name: Pull Image from Docker hub
-        run: docker pull simonalan/blog-application:latest
+        run: sudo docker pull simonalan/blog-application:latest
       - name: Delete old container
         run: docker rm -f blog_application_container
       - name: Run docker container
