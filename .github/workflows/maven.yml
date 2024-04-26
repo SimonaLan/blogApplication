@@ -29,15 +29,12 @@ jobs:
         cache: maven
     - name: Build Project
       run: mvn clean install
-    - name: Build & push docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: simonalan/blog-application
-        tags: latest
-        registry: docker.io
-        dockerfile: Dockerfile
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Login to docker hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build docker image
+      run: docker build -t simonalan/blog-application .
+    - name: Publish image
+      run: docker push simonalan/blog-application:latest
 
   deploy:
     needs: build
