@@ -12,16 +12,16 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@Profile("!test")
+//@Profile("!test")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
-    private final String h2Path;
+//    private final String h2Path;
 
-    public SecurityConfig(@Value("${spring.h2.console.path}") String h2Path) {
-        this.h2Path = h2Path + "/**";
-
-    }
+//    public SecurityConfig(@Value("${spring.h2.console.path}") String h2Path) {
+//        this.h2Path = h2Path + "/**";
+//
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,10 +47,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return web -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .antMatchers(h2Path);
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer(){
+//        return web -> web.ignoring()
+//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+//                .antMatchers(h2Path);
+//    }
 }
