@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Start MySQL Container
         run: |
-          docker run -d --name blogdb_container -e MYSQL_ROOT_PASSWORD=simona -e MYSQL_DATABASE=blogdb -p 3306:3306 mysql:latest
+          docker run --detach --name mysql_blog_application --env MYSQL_ROOT_PASSWORD=simona --env MYSQL_DATABASE=blogdb --env MYSQL_USER=simona --env MYSQL_PASSWORD=simona --publish 3306:3306 mysql
           sleep 10 # Give some time for MySQL to start
 
       - uses: actions/checkout@v3
