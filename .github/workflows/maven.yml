@@ -20,10 +20,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Start MySQL Container
-        run: |
-          docker run --detach --name mysql_blog_application --env MYSQL_ROOT_PASSWORD=simona --env MYSQL_DATABASE=blogdb --env MYSQL_USER=simona --env MYSQL_PASSWORD=simona --publish 3306:3306 mysql
-          sleep 10 # Give some time for MySQL to start
 
       - uses: actions/checkout@v3
       - name: Setup JDK 18
@@ -32,6 +28,8 @@ jobs:
           java-version: '18'
           distribution: 'temurin'
           cache: maven
+      - name: Set up H2 Database
+        uses: duchunter/h2database-action@v1
       - name: Build Project
         run: mvn clean install
       - name: Login to Docker Hub
