@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: simona
-      MYSQL_DATABASE: myblog
+      MYSQL_DATABASE: blogdb
       MYSQL_USER: simona
       MYSQL_PASSWORD: simona
     ports:
