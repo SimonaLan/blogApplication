@@ -65,11 +65,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install Docker
-      - name: Install Docker
+      # Install dependencies and resolve conflicts
+      - name: Update apt cache and resolve dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y docker.io
+          sudo apt-get install -y --no-install-recommends \
+            apt-transport-https \
+            ca-certificates \
+            curl \
+            software-properties-common
+          sudo apt-get install -y --no-install-recommends \
+            docker.io
+          sudo apt-mark hold containerd.io
+
+      # Install Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
 
       # SSH into EC2 instance and deploy containers
       - name: Deploy to EC2
@@ -79,6 +92,5 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:docker-compose.yml
-            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "docker-compose -f docker-compose.yml up -d"
-
+            scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/path/to/remote/directory/docker-compose.yml
+            ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "docker-compose -f /path/to/remote/directory/docker-compose.yml up -d"
