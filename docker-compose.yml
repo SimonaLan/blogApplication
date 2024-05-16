@@ -5,10 +5,10 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: simona
+      MYSQL_DATABASE: myblog
+      MYSQL_USER: simona
+      MYSQL_PASSWORD: simona
     ports:
       - "3306:3306"
     volumes:
