@@ -29,7 +29,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Set up H2 Database
-        uses: duchunter/h2database-action@v1
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings><profiles><profile><id>h2</id><properties><h2.console.dir>~/.h2</h2.console.dir></properties></profile></profiles><activeProfiles><activeProfile>h2</activeProfile></activeProfiles></settings>" > ~/.m2/settings.xml
+
       - name: Build Project
         run: mvn clean install
       - name: Login to Docker Hub
