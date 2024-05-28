@@ -18,7 +18,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: simonalan/springbootapp:latest
     ports:
       - "8080:8080"
     depends_on:
