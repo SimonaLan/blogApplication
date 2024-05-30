@@ -1,10 +1,13 @@
-name: Deploy to AWS ECS
+name: Deploy to AWS ECS with RDS
+
 on:
   push:
     branches: [ master ]
+
 jobs:
   build-and-deploy:
-    runs-on: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -29,7 +32,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          mask-password: 'true'
+          registry: 'your-ecr-registry'
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -38,12 +41,9 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: springboot-application
         run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -51,6 +51,7 @@ jobs:
           task-definition: springboot-app-task.json
           container-name: springboot-app
           image: ${{ steps.build-image.outputs.image }}
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
@@ -58,3 +59,8 @@ jobs:
           service: springboot-application-service
           cluster: BlogAppCluster
           wait-for-service-stability: true
+
+      - name: Test RDS Connectivity
+        run: |
+          # Example command to test RDS connectivity using MySQL client
+          mysql -h blog-db.c10s6s2ke10j.eu-west-1.rds.amazonaws.com -P 3306 -u admin -p'${{ secrets.DB_PASSWORD }}' -e "SHOW DATABASES;"
