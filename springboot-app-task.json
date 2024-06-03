@@ -16,16 +16,6 @@
       ],
       "essential": true,
       "environment": [],
-      "secrets": [
-        {
-          "name": "SPRING_DATASOURCE_USERNAME",
-          "valueFrom": "arn:aws:secretsmanager:eu-west-1:339713126204:secret:my-db-secret:username::"
-        },
-        {
-          "name": "SPRING_DATASOURCE_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:eu-west-1:339713126204:secret:my-db-secret:password::"
-        }
-      ],
       "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
