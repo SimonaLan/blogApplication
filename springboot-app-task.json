@@ -18,6 +18,16 @@
       "environment": [
         {
           "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "PlaceholderForUsername"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "PlaceholderForPassword"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
           "valueFrom": "arn:aws:secretsmanager:eu-west-1:339713126204:secret:my-db-secret:username::"
         },
         {
