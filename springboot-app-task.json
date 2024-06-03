@@ -15,16 +15,7 @@
         }
       ],
       "essential": true,
-      "environment": [
-        {
-          "name": "SPRING_DATASOURCE_USERNAME",
-          "value": "PlaceholderForUsername"
-        },
-        {
-          "name": "SPRING_DATASOURCE_PASSWORD",
-          "value": "PlaceholderForPassword"
-        }
-      ],
+      "environment": [],
       "secrets": [
         {
           "name": "SPRING_DATASOURCE_USERNAME",
