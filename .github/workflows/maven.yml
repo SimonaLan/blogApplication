@@ -3,9 +3,6 @@ on:
   push:
     branches: [ master ]
 
-env:
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
 jobs:
   build-and-deploy:
     runs-on: [ ubuntu-latest ]
