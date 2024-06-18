@@ -56,6 +56,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: springboot-application-service2
+          service: springboot-application-service
           cluster: BlogAppCluster
           wait-for-service-stability: true
